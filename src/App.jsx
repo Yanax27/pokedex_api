@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import HomeLayout from './layuots/HomeLayout';
+import DashboardLayout from './layuots/DashboardPage';
+import DashboardPage from './components/DashboardPage';
+import NotFound from './components/404';
+import Pokemon from './components/Pokemon';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      {/* Página de inicio */}
+      <Route path="/" element={<HomeLayout />}>
+      </Route>
 
-export default App
+      {/* Dashboard con Sidebar */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="pokemon" element={<Pokemon />} /> {/* Subruta sin "/" */}
+      </Route>
+
+      {/* Página no encontrada */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
+export default App;
